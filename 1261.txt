@@ -1,0 +1,40 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+type FindElements struct {
+    Val map[int]bool
+}
+
+
+func Constructor(root *TreeNode) FindElements {
+    valset := map[int]bool{}
+    dfs(root,0,valset)
+    return FindElements{
+        Val : valset,
+    }
+}
+func dfs(node *TreeNode,val int ,treeSet map[int]bool){
+    if node == nil{
+        return
+    }
+    node.Val = val
+    treeSet[val] = true
+    dfs(node.Left,val *2+1,treeSet)
+    dfs(node.Right,val*2+2,treeSet)
+}
+
+func (this *FindElements) Find(target int) bool {
+    return this.Val[target]
+}
+
+
+/**
+ * Your FindElements object will be instantiated and called as such:
+ * obj := Constructor(root);
+ * param_1 := obj.Find(target);
+ */
