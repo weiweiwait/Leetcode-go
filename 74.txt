@@ -1,0 +1,37 @@
+1.暴力
+func searchMatrix(matrix [][]int, target int) bool {
+    for _ , row := range matrix {
+        for _, value := range row{
+            if value == target{
+                return true
+            }
+        }
+    }
+    return false
+}
+2.二分查找
+func searchMatrix(matrix [][]int, target int) bool {
+      m, n := len(matrix), len(matrix[0])
+    i := sort.Search(m*n, func(i int) bool { return matrix[i/n][i%n] >= target })
+    return i < m*n && matrix[i/n][i%n] == target
+}
+func searchMatrix(matrix [][]int, target int) bool {
+    if len(matrix) == 0 || len(matrix[0]) == 0 {
+        return false
+    }
+
+    rows, cols := len(matrix), len(matrix[0])
+    left, right := 0, rows*cols-1
+
+    for left <= right {
+        mid := left + (right-left)/2
+        midVal := matrix[mid/cols][mid%cols]
+
+        if midVal == target {
+            return true
+        } else if midVal < target {
+            left = mid + 1
+        } else {
+            right = mid - 1
+        }
+    }
