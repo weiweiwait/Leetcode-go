@@ -1,0 +1,18 @@
+func subsetsWithDup(nums []int) [][]int {
+    sort.Ints(nums) // 对数组排序
+    res := make([][]int, 0)
+    var dfs func([]int, int)
+    dfs = func(cur []int, idx int) {
+        res = append(res, append([]int{}, cur...)) // 对当前组合进行复制然后添加到结果列表中
+
+        for i := idx; i < len(nums); i++ {
+            if i > idx && nums[i] == nums[i-1] { //跳过重复元素
+                continue
+            }
+            dfs(append(cur, nums[i]), i+1)
+        }
+    }
+
+    dfs([]int{}, 0)
+    return res
+}
