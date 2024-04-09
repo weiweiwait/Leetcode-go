@@ -1,0 +1,34 @@
+、、1
+func maximumCount(nums []int) int {
+    po , zheng := 0 , 0
+    for i:= 0 ;i<len(nums);i++{
+        if nums[i]<0{
+            po++
+        }else if nums[i]>0{
+            zheng++
+        }
+    }
+    if po > zheng{
+        return po
+    }else{
+        return zheng
+    }
+}
+、、2
+func maximumCount(nums []int) int {
+   pos1 := lowerBound(nums,0);
+   pos2 := lowerBound(nums,1);
+   return max(pos1,len(nums)-pos2)
+}
+func lowerBound(nums []int,val int) int{
+    l , r := 0,len(nums)
+    for l<r{
+        m := (l+r) / 2
+        if nums[m] >= val{
+            r = m
+        }else{
+            l = m+1
+        }
+    }
+    return l
+}
