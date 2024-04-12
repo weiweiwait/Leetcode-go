@@ -1,0 +1,101 @@
+不能全过，只能找到第一次下标
+func findSubstring(s string, words []string) []int {
+    // 排除特殊情况
+    if len(words) == 0 {
+        return nil
+    }
+    wordLen := len(words[0])
+    combLen := len(words) * wordLen
+    if len(s) < combLen {
+        return nil
+    }
+
+    // 求words的所有组合
+    var (
+        combs   = []string{""}                     // words所有的组合
+        counter = make(map[string]int, len(words)) // 每一次组合中可用的word数量
+    )
+    for i := 0; i < len(words); i++ {
+        combsLen := len(combs)
+        for j := 0; j < combsLen; j++ {
+            comb := combs[j]
+            for _, word := range words {
+                counter[word]++
+            }
+            for head := 0; head+wordLen <= len(comb); head += wordLen {
+                word := comb[head : head+wordLen]
+                counter[word]--
+            }
+
+            k := 0
+            for _, word := range words {
+                if counter[word] > 0 {
+                    if k == 0 {
+                        combs[j] = comb + word
+                    } else {
+                        combs = append(combs, comb+word)
+                    }
+                    k++
+                    counter[word]--
+                }
+            }
+        }
+    }
+
+    // 遍历比较所有的子字符串
+    var indices []int
+    indicess := make([]int, len(s)) // 假设你想让 indicess 的长度与 s 一样
+    for _, comb := range combs {
+        site := strings.Index(s, comb)
+        // 首次检查 site 的值，确认它不是 -1
+        if site != -1 {
+            indicess[site]++
+            if indicess[site] == 1 {
+                indices = append(indices, site)
+            }
+        }
+    }
+    return indices
+}
+// func findSubstring(s string, words []string) []int {
+
+//      var site  =  strings.Index(haystack,needle)
+// }
+
+func findSubstring(s string, words []string) []int {
+    if len(words) == 0 {
+        return []int{}
+    }
+
+    wordTotal := len(words)
+    wordLen := len(words[0])
+    subLen := wordLen * wordTotal
+    result := make([]int, 0)
+
+    dict := make(map[string]int)
+    for _, word := range words {
+        dict[word]++
+    }
+
+    for i := 0; i < len(s)-subLen+1; i++ {
+        subS := s[i : i+subLen]
+        dictTmp := make(map[string]int)
+        for j := 0; j < subLen-wordLen+1; j += wordLen {
+            w := subS[j : j+wordLen]
+            dictTmp[w]++
+        }
+        if isEqual(dict, dictTmp) {
+            result = append(result, i)
+        }
+    }
+    return result
+}
+
+func isEqual(a, b map[string]int) bool {
+    for key, value := range a {
+        if b[key] != value {
+            return false
+        }
+    }
+    return true
+}
