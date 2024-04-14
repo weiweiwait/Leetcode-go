@@ -1,0 +1,48 @@
+const base = 769
+
+type MyHashSet struct {
+	data []list.List // 利用双向链表
+}
+
+func Constructor() MyHashSet {
+	return MyHashSet{data: make([]list.List, base)}
+}
+
+// 哈希映射
+func (m *MyHashSet) hash(x int) int {
+	return x % base
+}
+
+func (m *MyHashSet) Add(key int) {
+	if !m.Contains(key) {
+		idx := m.hash(key)
+		m.data[idx].PushBack(key)
+	}
+}
+
+func (m *MyHashSet) Remove(key int) {
+	idx := m.hash(key)
+	for node := m.data[idx].Front(); node != nil; node = node.Next() {
+		if node.Value.(int) == key {
+			m.data[idx].Remove(node)
+		}
+	}
+}
+
+func (m *MyHashSet) Contains(key int) bool {
+	idx := m.hash(key)
+	for node := m.data[idx].Front(); node != nil; node = node.Next() {
+		if node.Value.(int) == key {
+			return true
+		}
+	}
+
+	return false
+}
+/**
+ * Your MyHashSet object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.Add(key);
+ * obj.Remove(key);
+ * param_3 := obj.Contains(key);
+ */
