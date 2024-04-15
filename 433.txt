@@ -1,0 +1,39 @@
+func minMutation(startGene string, endGene string, bank []string) int {
+    minSteps := len(bank) + 1
+    visited := make(map[string]bool)
+    
+    var dfs func(current string, steps int)
+    dfs = func(current string, steps int) {
+        if current == endGene {
+            if steps < minSteps {
+                minSteps = steps
+            }
+            return
+        }
+        for _, gene := range bank {
+            if visited[gene] {
+                continue
+            }
+            if diff(current, gene) != 1 {
+                continue
+            }
+            visited[gene] = true
+            dfs(gene, steps+1)
+            visited[gene] = false
+        }
+    }
+    dfs(startGene, 0)
+    if minSteps == len(bank)+1 {
+        return -1
+    }
+    return minSteps
+}
+func diff(a, b string) int {
+    diffs := 0
+    for i := 0; i < len(a); i++ {
+        if a[i] != b[i] {
+            diffs++
+        }
+    }
+    return diffs
+}
