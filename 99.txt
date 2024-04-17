@@ -1,0 +1,45 @@
+//普通暴力法
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func recoverTree(root *TreeNode)  {
+   arr := inorderTraversal(root)
+    x, y := findTwoSwapped(arr)
+    swap(x, y)
+}
+func inorderTraversal(root *TreeNode) (res []*TreeNode) {
+    var inorder func(*TreeNode)
+    inorder = func(root *TreeNode) {
+        if root != nil {
+            inorder(root.Left)
+            res = append(res, root)
+            inorder(root.Right)
+        }
+    }
+    inorder(root)
+    return
+}
+func findTwoSwapped(arr []*TreeNode) (x, y *TreeNode) {
+    for i := 0; i < len(arr)-1; i++ {
+        if arr[i].Val > arr[i+1].Val {
+            y = arr[i+1]
+            if x == nil {
+                x = arr[i]
+            } else {
+                break
+            }
+        }
+    }
+    return
+}
+func swap(x, y *TreeNode) {
+    if x != nil && y != nil {
+        x.Val, y.Val = y.Val, x.Val
+    }
+}
+//莫里斯遍历
