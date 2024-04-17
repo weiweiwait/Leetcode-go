@@ -1,0 +1,50 @@
+type State struct {
+    IP string
+    rem string
+}
+
+func restoreIpAddresses(s string) []string {
+    var result []string
+    stack := []State{{"", s}}
+
+    for len(stack) > 0 {
+        state := stack[len(stack)-1]
+        stack = stack[:len(stack)-1]
+        segments := strings.Split(state.IP, ".")
+
+        if len(segments) == 4 && state.rem == "" {
+            result = append(result, state.IP)
+            continue
+        }
+
+        if len(segments) == 4 || len(state.rem) == 0 {
+            continue
+        }
+
+        for i := 1; i <= 3 && i <= len(state.rem); i++ {
+            part := state.rem[:i]
+            if isValidPart(part) {
+                newIP := state.IP
+                if newIP != "" {
+                    newIP += "."
+                }
+                stack = append(stack, State{newIP + part, state.rem[i:]}) 
+            }
+        }
+    }
+
+    return result
+}
+
+func isValidPart(s string) bool {
+    if len(s) != len(strconv.Itoa(atoi(s))) {
+        return false
+    }
+    a := atoi(s)
+    return a >= 0 && a <= 255
+}
+
+func atoi(s string) int {
+    res, _ := strconv.Atoi(s)
+    return res
+}
