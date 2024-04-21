@@ -1,0 +1,32 @@
+ res := [][]int{}
+    path := []int{}
+    book := [10]bool{} // 从1到9只有9个数，但是为了编程上方便，我们开10个bool, book[i]表示数字i是否已经被使用过
+
+    var dfs func(sum, depth, idx int)
+
+    dfs = func(sum, depth, idx int) {
+        if sum==n && depth==k { // 已加入k个数且总和是n
+            tmp := make([]int, len(path))
+            copy(tmp, path)
+            res = append(res, tmp) // 加入结果列表
+            return 
+        }
+        
+        if sum > n || depth > k { // 如果相加的数大于n或者加入的数超过k， 则剪枝
+            return
+        }
+
+        for i := idx; i < 10; i++ {
+            if !book[i] { //数字i没有被用过
+                book[i] = true
+                path = append(path, i)
+                dfs(sum + i, depth + 1, i + 1)
+                path = path[0 : len(path) - 1] // 撤销选择，回溯
+                book[i] = false
+            }
+        }
+    }
+
+    dfs(0, 0, 1)
+
+    return res
