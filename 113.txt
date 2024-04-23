@@ -1,0 +1,36 @@
+
+func pathSum(root *TreeNode, targetSum int) [][]int {
+    var res [][]int
+    var path []int
+
+    var dfs func(*TreeNode, int)
+    dfs = func(node *TreeNode, remain int) {
+        if node == nil {
+            return
+        }
+
+        // 当前路径添加节点
+        path = append(path, node.Val)
+        remain -= node.Val
+
+        // 到达叶子节点，检查路径总和是否为目标和
+        if node.Left == nil && node.Right == nil {
+            if remain == 0 {
+                tmp := make([]int, len(path))
+                copy(tmp, path)
+                res = append(res, tmp)
+            }
+        } else {
+            // 递归处理左子树和右子树
+            dfs(node.Left, remain)
+            dfs(node.Right, remain)
+        }
+
+        // 回溯
+        path = path[:len(path)-1]
+    }
+    
+    dfs(root, targetSum)
+
+    return res
+}
