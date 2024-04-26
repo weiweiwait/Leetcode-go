@@ -1,0 +1,32 @@
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func insertionSortList(head *ListNode) *ListNode {
+    dummyHead := &ListNode{Val: 0}
+    dummyHead.Next = head
+    cur := head
+    var prev *ListNode
+    var temp *ListNode
+
+    for cur != nil && cur.Next != nil{
+        if cur.Val <= cur.Next.Val{
+            cur = cur.Next
+        }else{
+            temp = cur.Next
+            cur.Next = cur.Next.Next
+
+            prev = dummyHead
+            for prev.Next.Val<=temp.Val{
+                prev = prev.Next
+            }
+            temp.Next = prev.Next
+            prev.Next = temp
+        }
+
+    }
+    return dummyHead.Next
+}
