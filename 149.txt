@@ -1,0 +1,21 @@
+func maxPoints(points [][]int) int {
+    n := len(points)
+    ans := 1
+    for i:=0;i<n;i++{
+        x := points[i]
+        for j:=i+1;j<n;j++{
+            y := points[j]
+            cnt := 2
+            for k:=j+1;k<n;k++{
+                p := points[k]
+                s1 := (y[1]-x[1])*(p[0]-y[0])
+                s2 := (p[1]-y[1])*(y[0]-x[0])
+                if s1==s2{
+                    cnt++
+                }
+            }
+            ans = max(ans,cnt)
+        }
+    }
+    return ans
+}
