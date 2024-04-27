@@ -1,0 +1,25 @@
+func baseNeg2(n int) string {
+     if n == 0 {
+        return "0"
+    }
+    
+    var res string
+    for n != 0{
+        mod := n%(-2)
+        n = n/(-2)
+        if mod <0{
+            n++
+            mod = -mod
+        }
+        res += strconv.Itoa(mod)
+    }
+    return reverseString(res)
+
+}
+func reverseString(s string) string {
+    runes := []rune(s)
+    for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
+        runes[i], runes[j] = runes[j], runes[i]
+    }
+    return string(runes)
+}
