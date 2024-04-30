@@ -1,0 +1,15 @@
+func numberOfEmployeesWhoMetTarget(hours []int, target int) int {
+    slices.Sort(hours)
+    var cnt int
+    len1 := len(hours)
+    if hours[len1-1] < target{
+        return 0
+    }
+    for i:=0;i<len1;i++{
+        if hours[i]>=target{
+            cnt = i
+            break
+        }
+    }
+    return len1-cnt
+}
