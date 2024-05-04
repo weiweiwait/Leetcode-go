@@ -1,0 +1,14 @@
+func majorityElement(nums []int) []int {
+    count := len(nums) / 3
+    cnt := make(map[int]int)
+    for i := 0; i < len(nums); i++ {
+        cnt[nums[i]]++
+    }
+    result := []int{}
+    for n, c := range cnt {
+        if c > count {
+            result = append(result, n)
+        }
+    }
+    return result
+}
