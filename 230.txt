@@ -1,0 +1,22 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func kthSmallest(root *TreeNode, k int) int {
+    var nums []int
+    inorderTraversal(root, &nums)
+    return nums[k-1]
+}
+
+func inorderTraversal(node *TreeNode, nums *[]int) {
+    if node == nil {
+        return
+    }
+    inorderTraversal(node.Left, nums)
+    *nums = append(*nums, node.Val)
+    inorderTraversal(node.Right, nums)
+}
