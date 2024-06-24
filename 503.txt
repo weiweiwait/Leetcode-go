@@ -1,0 +1,14 @@
+func nextGreaterElements(nums []int) []int {
+    n := len(nums)
+    res := make([]int, n)
+    for i := 0; i < n; i++ {
+        res[i] = -1
+        for j := 1; j < n; j++ {
+            if nums[(i+j)%n] > nums[i] {
+                res[i] = nums[(i+j)%n]
+                break
+            }
+        }
+    }
+    return res
+}
