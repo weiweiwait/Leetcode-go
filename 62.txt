@@ -1,0 +1,26 @@
+func uniquePaths(m int, n int) int {
+    // 创建一个m行n列的二维切片
+    dp := make([][]int, m)
+    for i := range dp {
+        dp[i] = make([]int, n)
+    }
+
+    // 初始化第一行和第一列的所有值为1
+    for i := range dp {
+        for j := range dp[i] {
+            if i == 0 || j == 0 {
+                dp[i][j] = 1
+            }
+        }
+    }
+
+    // 计算其他位置的路径数
+    for i := 1; i < m; i++ {
+        for j := 1; j < n; j++ {
+            dp[i][j] = dp[i-1][j] + dp[i][j-1]
+        }
+    }
+
+    // 返回右下角的路径数
+    return dp[m-1][n-1]
+}
