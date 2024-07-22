@@ -1,0 +1,28 @@
+func removeNthFromEnd(head *ListNode, n int) *ListNode {
+    if head == nil || n <= 0 {
+        return head
+    }
+
+    len2 := lenlian(head)
+    if len2 == n{
+        return head.Next
+    }
+    k := len2-n
+     
+    pre := head
+    for i:=1;i<k;i++{
+        pre = pre.Next
+    }
+     if pre.Next != nil {
+        pre.Next = pre.Next.Next
+    }
+    return head
+}
+func lenlian(head *ListNode) int{
+   length := 0
+    for head != nil {
+        length++
+        head = head.Next
+    }
+    return length
+}
