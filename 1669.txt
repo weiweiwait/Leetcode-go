@@ -1,0 +1,16 @@
+func mergeInBetween(list1 *ListNode, a int, b int, list2 *ListNode) *ListNode {
+    pre1 := list1
+    for i:=0;i<a-1;i++{
+        pre1 = pre1.Next
+    }
+    pre2 := pre1
+    for i:= 0;i<b-a+2;i++{
+        pre2 = pre2.Next
+    }
+    pre1.Next = list2
+    for list2.Next != nil{
+        list2 = list2.Next
+    }
+    list2.Next = pre2
+    return list1
+}
