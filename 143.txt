@@ -1,0 +1,27 @@
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func reorderList(head *ListNode)  {
+    if head == nil{
+        return 
+    }
+    node := []*ListNode{}
+    for nodes:=head  ; nodes != nil;nodes= nodes.Next{
+        node = append(node,nodes)
+    }
+    i , j := 0,len(node)-1
+    for i<j{
+        node[i].Next  = node[j]
+        i++
+        if i==j{
+            break
+        }
+        node[j].Next = node[i]
+        j--
+    }
+    node[i].Next = nil
+}
