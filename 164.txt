@@ -1,0 +1,29 @@
+func maximumGap(nums []int) (ans int) {
+    m := slices.Min(nums)
+    M := slices.Max(nums)
+    if M-m <= 1{
+        return M-m
+    }
+    n := len(nums)
+    d := (M-m+n-2)/(n-1)
+    type pair struct{min,max int}
+    buckets := make([]pair,(M-m)/d+1)
+    for i:= range buckets{
+        buckets[i] = pair{math.MaxInt,math.MinInt}
+    }
+     for _, x := range nums {
+        b := &buckets[(x-m)/d]
+        b.min = min(b.min, x) 
+        b.max = max(b.max, x)
+    }
+
+    preMax := math.MaxInt
+    for _, b := range buckets {
+        if b.min != math.MaxInt { 
+
+            ans = max(ans, b.min-preMax)
+            preMax = b.max
+        }
+    }
+    return
+}
