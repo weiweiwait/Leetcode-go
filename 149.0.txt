@@ -1,0 +1,13 @@
+func checkSymmetricTree(root *TreeNode) bool {
+    result := check(root,root)
+    return result
+}
+func check(p, q *TreeNode) bool {
+    if p == nil && q == nil {
+        return true
+    }
+    if p == nil || q == nil {
+        return false
+    }
+    return p.Val == q.Val && check(p.Left, q.Right) && check(p.Right, q.Left)
+}
