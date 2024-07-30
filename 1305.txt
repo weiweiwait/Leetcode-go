@@ -1,0 +1,30 @@
+func getAllElements(root1 *TreeNode, root2 *TreeNode) []int {
+    tree1 := levelOrder(root1)
+    tree2 := levelOrder(root2)
+    values := append(tree1, tree2...)
+    slices.Sort(values)
+    return values
+}
+func levelOrder(root *TreeNode) []int {
+	if root == nil {
+		return nil
+	}
+
+	var result []int
+	queue := []*TreeNode{root} 
+
+	for len(queue) > 0 {
+		node := queue[0]
+		queue = queue[1:] 
+		result = append(result, node.Val)
+
+		if node.Left != nil {
+			queue = append(queue, node.Left)
+		}
+		if node.Right != nil {
+			queue = append(queue, node.Right)
+		}
+	}
+
+	return result
+}
