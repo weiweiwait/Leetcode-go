@@ -1,0 +1,18 @@
+func trap(height []int)  (ans int){
+    stack :=[]int{}
+    for i,h:=range height{
+        for len(stack) >0 && h>height[stack[len(stack)-1]]{
+            top := stack[len(stack)-1]
+            stack = stack[:len(stack)-1]
+            if len(stack) == 0{
+                break
+            }
+            left := stack[len(stack)-1]
+            cw := i-left -1
+            ch := min(height[left],h)-height[top]
+            ans +=  cw*ch
+        }
+        stack = append(stack,i)
+    }
+    return
+}
