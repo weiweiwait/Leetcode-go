@@ -1,0 +1,14 @@
+func findContentChildren(g []int, s []int) int {
+    slices.Sort(g)
+    slices.Sort(s)
+    n := len(g)
+   
+    res := 0
+    for i,_ := range s{
+        if res < n && g[res]<=s[i]{
+            res ++
+        }
+    }
+ 
+    return res
+}
