@@ -1,0 +1,21 @@
+func combinationSum(candidates []int, target int) [][]int {
+    var result [][]int
+    var path []int
+     var dfs func(target1 int, start int)
+    dfs = func(target1 int, start int) {
+        if target1 == 0{
+             result = append(result, append([]int(nil), path...))
+             return
+        }
+        if target1 < 0{
+            return
+        }
+        for i:=start;i<len(candidates);i++{
+             path = append(path, candidates[i])
+             dfs(target1-candidates[i],i)
+             path = path[:len(path)-1]
+        }
+    }
+    dfs(target,0)
+    return result
+}
